@@ -1,2 +1,2 @@
 # desafio-mv-finaceiro
-Repositório com o projeto desafio da Célula Finaceiro E Controladoria da MV.
+Repositório com o projeto desafio da Célula Finaceiro e Controladoria da MV.
