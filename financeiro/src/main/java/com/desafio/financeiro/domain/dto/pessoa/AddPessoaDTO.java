@@ -12,7 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import io.swagger.annotations.ApiModel;
 
-@ApiModel(value = "DTO para cadastrar uma Pessoa", description = "DTO com as informações necessárias para realizar o cadastro.")
+@ApiModel(value = "AddPessoaDTO", description = "DTO com as informações necessárias para realizar o cadastro.")
 public class AddPessoaDTO implements Serializable {
 
 	private static final long serialVersionUID = 582361038349473117L;

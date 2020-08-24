@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.desafio.financeiro.domain.dto.conta.AddContaDTO;
+import com.desafio.financeiro.domain.dto.conta.AlterarContaDTO;
 import com.desafio.financeiro.domain.dto.conta.ContaDTO;
 import com.desafio.financeiro.domain.entity.Cliente;
 import com.desafio.financeiro.domain.entity.Conta;
@@ -29,7 +30,7 @@ public class ContaService implements Serializable {
 	
 	private static final String ACAO_NAO_PODE_SER_REALIZADA_EXISTEM_MOVIMENTACOES_NA_CONTA = "Ação não pode ser realizada, existem movimentações na conta.";
 	private static final String CONTA_NAO_ENCONTRADA = "Conta não Encontrada";
-	private static final String CLIENTE_NAO_ENCONTRADO = "Cliente não encontrado";
+	private static final String CLIENTE_NAO_ENCONTRADO = "Cliente não Encontrada";
 	
 	@Autowired
 	private ContaRepository repository;
@@ -73,29 +74,12 @@ public class ContaService implements Serializable {
 	
 	/**
 	 * 
-	 * @param contaDTO
-	 * @return
-	 */
-	@Transactional
-	public ResponseEntity<ContaDTO> cadastrar(@Valid AddContaDTO contaDTO) {
-
-		Optional<Cliente> optionalCliente = clienteService.consultarClientePorId(contaDTO.getIdCliente());
-
-		if (!optionalCliente.isPresent()) {
-			throw new NegocioException(CLIENTE_NAO_ENCONTRADO);
-		}
-		return ResponseEntity
-				.ok(ContaMapper.mapper(repository.save(ContaMapper.mapper(optionalCliente.get(), contaDTO))));
-	}
-	
-	/**
-	 * 
 	 * @param id
 	 * @param contaDTO
 	 * @return
 	 */
 	@Transactional
-	public ResponseEntity<ContaDTO> alterar(Long id, @Valid AddContaDTO contaDTO) {
+	public ResponseEntity<ContaDTO> alterar(Long id, @Valid AlterarContaDTO contaDTO) {
 		
 		if (CollectionUtils.isNotEmpty(movimentacaoService.consultarPorIdConta(id))) {
 			throw new NegocioException(ACAO_NAO_PODE_SER_REALIZADA_EXISTEM_MOVIMENTACOES_NA_CONTA);
@@ -122,5 +106,38 @@ public class ContaService implements Serializable {
 		conta.setAtivo(Boolean.FALSE);
 		
 		repository.save(conta);
+	}
+	
+	/**
+	 * 
+	 * @param idConta
+	 * @return
+	 */
+	public Optional<Conta> buscarPorId(Long idConta) {
+		return repository.findById(idConta);
+	}
+	
+	/**
+	 * 
+	 * @param cliente
+	 * @param contaDTO
+	 * @return
+	 */
+	@Transactional
+	public Conta cadastrar(Cliente cliente, AddContaDTO contaDTO) {
+		return repository.save(ContaMapper.mapper(cliente, contaDTO));
+	}
+	
+	/**
+	 * 
+	 * @param conta
+	 */
+	public void atualizarSaldo(Conta conta) {
+		
+		try {
+			repository.save(conta);
+		} catch (IllegalArgumentException e) {
+			throw new NegocioException(CONTA_NAO_ENCONTRADA);
+		}
 	}
 }

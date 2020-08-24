@@ -3,6 +3,7 @@ package com.desafio.financeiro.service.mapper;
 import java.math.BigDecimal;
 
 import com.desafio.financeiro.domain.dto.conta.AddContaDTO;
+import com.desafio.financeiro.domain.dto.conta.AlterarContaDTO;
 import com.desafio.financeiro.domain.dto.conta.ContaDTO;
 import com.desafio.financeiro.domain.entity.Cliente;
 import com.desafio.financeiro.domain.entity.Conta;
@@ -44,7 +45,7 @@ public class ContaMapper {
 		return conta;
 	}
 
-	public static Conta mapper(Cliente cliente, Conta conta, AddContaDTO contaDTO) {
+	public static Conta mapper(Cliente cliente, Conta conta, AlterarContaDTO contaDTO) {
 		
 		conta.setAgencia(contaDTO.getAgencia());
 		conta.setAtivo(contaDTO.getAtivo());

@@ -7,7 +7,7 @@ import com.desafio.financeiro.domain.dto.cliente.ClienteResumoDTO;
 
 import io.swagger.annotations.ApiModel;
 
-@ApiModel(value = "DTO que representa a Conta", description = "DTO com as informações da Conta")
+@ApiModel(value = "ContaDTO", description = "DTO com as informações da Conta")
 public class ContaDTO implements Serializable {
 
 	private static final long serialVersionUID = 304115726616158997L;

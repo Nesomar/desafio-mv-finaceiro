@@ -6,11 +6,14 @@ import java.time.LocalDate;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
+import io.swagger.annotations.ApiModel;
+
 /**
  * 
  * @author nrfreire
  *
  */
+@ApiModel(value = "MensagemErroDTO", description = "DTO com as informações de erro.")
 public class MensagemErroDTO implements Serializable {
 
 	private static final long serialVersionUID = 7507482266933845621L;

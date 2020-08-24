@@ -5,12 +5,14 @@ import java.io.Serializable;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import io.swagger.annotations.ApiModel;
+/**
+ * 
+ * @author nfreire
+ *
+ */
+public class AlterarContaDTO implements Serializable {
 
-@ApiModel(value = "AddContaDTO", description = "DTO com as informações necessárias para cadastrar a Conta")
-public class AddContaDTO implements Serializable {
-
-	private static final long serialVersionUID = -4215701438358786081L;
+	private static final long serialVersionUID = -2486943924989835453L;
 	
 	@NotBlank(message = "Campo Agência obrigatório.")
 	@Size(max = 10)
@@ -21,8 +23,10 @@ public class AddContaDTO implements Serializable {
 	private String numeroConta;
 	
 	private Boolean ativo;
+	
+	private Long idCliente;
 
-	public AddContaDTO() {
+	public AlterarContaDTO() {
 	}
 
 	public String getAgencia() {
@@ -47,5 +51,13 @@ public class AddContaDTO implements Serializable {
 
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public Long getIdCliente() {
+		return idCliente;
+	}
+
+	public void setIdCliente(Long idCliente) {
+		this.idCliente = idCliente;
 	}
 }

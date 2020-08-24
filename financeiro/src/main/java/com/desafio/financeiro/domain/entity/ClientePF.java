@@ -3,15 +3,16 @@ package com.desafio.financeiro.domain.entity;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
-@DiscriminatorValue("PF")
+@DiscriminatorValue(value = "PF")
 public class ClientePF extends Cliente {
 
 	private static final long serialVersionUID = -7332835663303244716L;
 	
-	@NotBlank
+	@CPF
 	@Column(name = "CPF")
 	private String cpf;
 

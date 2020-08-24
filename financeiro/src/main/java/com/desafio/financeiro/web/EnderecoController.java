@@ -35,23 +35,23 @@ public class EnderecoController {
 	private EnderecoService service;
 	
 	@GetMapping
-	@ApiOperation(value = "Listar todos os endereços cadastradas.", tags = { "enderecos" })
+	@ApiOperation(value = "Listar todos os endereços cadastradas.", tags = { "Endereços" })
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso"), @ApiResponse(code = 400, message = "Erro") })
 	public Page<EnderecoDTO> listarTodos(
-			@ApiParam("Número da página") @RequestParam(value = "pagina", defaultValue = "1") Integer pagina,
+			@ApiParam("Número da página") @RequestParam(value = "pagina", defaultValue = "0") Integer pagina,
 			@ApiParam("Número máximo de itens por página") @RequestParam(value = "tamanhoPagina", defaultValue = "10") Integer tamanhoPagina) {
 		return service.listarTodos(pagina, tamanhoPagina);
 	}
 
 	@GetMapping("/{id}")
-	@ApiOperation(value = "Consultar uma Endereço por id", tags = { "enderecos" })
+	@ApiOperation(value = "Consultar uma Endereço por id", tags = { "Endereços" })
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso"), @ApiResponse(code = 404, message = "Não Encontrado") })
 	public ResponseEntity<EnderecoDTO> consultarPorId(@ApiParam("Id do Endereço") @PathVariable(value = "id") Long id) {
 		return service.consultarPorId(id);
 	}
 	
 	@PostMapping
-	@ApiOperation(value = "Cadastrar um Endereço", tags = { "enderecos" })
+	@ApiOperation(value = "Cadastrar um Endereço", tags = { "Endereços" })
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso"), @ApiResponse(code = 400, message = "Erro") })
 	public ResponseEntity<EnderecoDTO> cadastrar(
 			@ApiParam("Informações para cadastrar o Endereço") @Valid @RequestBody AddEnderecoDTO enderecoDTO) {
@@ -59,7 +59,7 @@ public class EnderecoController {
 	}
 	
 	@PutMapping("/{id}")
-	@ApiOperation(value = "Alterar as informações do Endereço", tags = { "enderecos" })
+	@ApiOperation(value = "Alterar as informações do Endereço", tags = { "Endereços" })
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso"),
 			@ApiResponse(code = 404, message = "Não Encontrado"), @ApiResponse(code = 400, message = "Erro") })
 	public ResponseEntity<EnderecoDTO> alterar(@ApiParam("Id do Endereço") @PathVariable(value = "id") Long id,
@@ -68,7 +68,7 @@ public class EnderecoController {
 	}
 
 	@DeleteMapping("/{id}")
-	@ApiOperation(value = "Inativar uma Empresa por id", tags = { "Empresas" })
+	@ApiOperation(value = "Inativar uma Empresa por id", tags = { "Endereços" })
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso"), @ApiResponse(code = 400, message = "Erro"),
 			@ApiResponse(code = 404, message = "Não Encontrado") })
 	public ResponseEntity<?> inativar(@ApiParam("Id do Endereço") @PathVariable(value = "id") Long id) {

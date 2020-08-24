@@ -16,7 +16,7 @@ import io.swagger.annotations.ApiModel;
  * @author nrfreire
  *
  */
-@ApiModel(value = "Filtros Movimentação DTO", description = "DTO com os campos possíveis para filtrar as movimentações")
+@ApiModel(value = "FiltroMovimentacaoDTO", description = "DTO com os campos possíveis para filtrar as movimentações")
 public class FiltroMovimentacaoDTO implements Serializable {
 
 	private static final long serialVersionUID = 4776138031091071237L;
@@ -25,7 +25,10 @@ public class FiltroMovimentacaoDTO implements Serializable {
 	private String tipoMovimentacao;
 
 	@DateTimeFormat(iso = ISO.DATE)
-	private LocalDate dataMovimentacao;
+	private LocalDate dataInicial;
+	
+	@DateTimeFormat(iso = ISO.DATE)
+	private LocalDate dataFinal;
 	
 	private String numeroConta;
 	
@@ -43,12 +46,20 @@ public class FiltroMovimentacaoDTO implements Serializable {
 		this.tipoMovimentacao = tipoMovimentacao;
 	}
 
-	public LocalDate getDataMovimentacao() {
-		return dataMovimentacao;
+	public LocalDate getDataInicial() {
+		return dataInicial;
 	}
 
-	public void setDataMovimentacao(LocalDate dataMovimentacao) {
-		this.dataMovimentacao = dataMovimentacao;
+	public void setDataInicial(LocalDate dataInicial) {
+		this.dataInicial = dataInicial;
+	}
+
+	public LocalDate getDataFinal() {
+		return dataFinal;
+	}
+
+	public void setDataFinal(LocalDate dataFinal) {
+		this.dataFinal = dataFinal;
 	}
 
 	public String getNumeroConta() {

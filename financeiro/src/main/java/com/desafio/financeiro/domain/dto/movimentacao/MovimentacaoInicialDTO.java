@@ -12,12 +12,14 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import com.desafio.financeiro.domain.annotation.EnumValues;
 import com.desafio.financeiro.domain.enums.TipoMovimentacaoEnum;
 
-import io.swagger.annotations.ApiModel;
+/**
+ * 
+ * @author nesom
+ *
+ */
+public class MovimentacaoInicialDTO implements Serializable {
 
-@ApiModel(value = "AddMovimentacaoDTO", description = "DTO com as informações necessárias para cadastrar uma movimentação")
-public class AddMovimentacaoDTO implements Serializable {
-
-	private static final long serialVersionUID = 5653650026670373883L;
+	private static final long serialVersionUID = 3544883944665045547L;
 
 	@EnumValues(enumClass = TipoMovimentacaoEnum.class, message = "Opção não encontrada no TipoMovimentacaoEnum")
 	private String tipoMovimentacao;
@@ -29,16 +31,13 @@ public class AddMovimentacaoDTO implements Serializable {
 	@NotNull(message = "Campo Valor Movimentação obrigatório.")
 	private BigDecimal valorMovimentacao;
 
-	@NotNull(message = "Campo Conta obrigatório.")
-	private Long idConta;
-
 	@NotNull(message = "Campo Empresa obrigatório.")
 	private Long idEmpresa;
 	
 	@NotNull(message = "Campo Movimentacao Inicial obrigatório.")
 	private Boolean movimentacaoInicial;
 
-	public AddMovimentacaoDTO() {
+	public MovimentacaoInicialDTO() {
 	}
 
 	public String getTipoMovimentacao() {
@@ -63,14 +62,6 @@ public class AddMovimentacaoDTO implements Serializable {
 
 	public void setValorMovimentacao(BigDecimal valorMovimentacao) {
 		this.valorMovimentacao = valorMovimentacao;
-	}
-
-	public Long getIdConta() {
-		return idConta;
-	}
-
-	public void setIdConta(Long idConta) {
-		this.idConta = idConta;
 	}
 
 	public Long getIdEmpresa() {

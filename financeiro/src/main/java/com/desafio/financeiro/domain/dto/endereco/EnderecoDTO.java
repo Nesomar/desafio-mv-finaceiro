@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 
 import io.swagger.annotations.ApiModel;
 
-@ApiModel(value = "DTO de Endereço", description = "DTO com as informações do Endereço")
+@ApiModel(value = "EnderecoDTO", description = "DTO com as informações do Endereço")
 public class EnderecoDTO implements Serializable {
 
 	private static final long serialVersionUID = -8309081064586666669L;

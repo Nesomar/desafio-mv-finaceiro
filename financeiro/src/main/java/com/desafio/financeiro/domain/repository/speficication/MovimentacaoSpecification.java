@@ -1,5 +1,6 @@
 package com.desafio.financeiro.domain.repository.speficication;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,11 @@ import org.springframework.data.jpa.domain.Specification;
 import com.desafio.financeiro.domain.dto.movimentacao.FiltroMovimentacaoDTO;
 import com.desafio.financeiro.domain.entity.Conta;
 import com.desafio.financeiro.domain.entity.Conta_;
+import com.desafio.financeiro.domain.entity.Empresa;
+import com.desafio.financeiro.domain.entity.Empresa_;
 import com.desafio.financeiro.domain.entity.Movimentacao;
 import com.desafio.financeiro.domain.entity.Movimentacao_;
+import com.desafio.financeiro.domain.enums.TipoMovimentacaoEnum;
 
 /**
  * 
@@ -20,6 +24,8 @@ import com.desafio.financeiro.domain.entity.Movimentacao_;
  *
  */
 public class MovimentacaoSpecification {
+	
+	private static final String TRUNC = "TRUNC";
 
 	private MovimentacaoSpecification() {
 
@@ -41,7 +47,33 @@ public class MovimentacaoSpecification {
 	}
 
 	public static Specification<Movimentacao> consultarPorFiltros(FiltroMovimentacaoDTO filtros) {
-		// TODO Auto-generated method stub
-		return null;
+		return (root, query, builder) -> {
+			
+			Join<Movimentacao, Empresa> joinEmpresa = root.join(Movimentacao_.empresa);
+			Join<Movimentacao, Conta> joinConta = root.join(Movimentacao_.conta);
+
+			List<Predicate> predicates = new ArrayList<>();
+
+			if (filtros.getDataInicial() != null && filtros.getDataFinal() != null) {
+				predicates.add(builder.between(
+						builder.function(TRUNC, LocalDate.class, root.get(Movimentacao_.dataMovimentacao)),
+						filtros.getDataInicial(), filtros.getDataFinal()));
+			}
+			
+			if (filtros.getCnpj() != null) {
+				predicates.add(builder.equal(joinEmpresa.get(Empresa_.cnpj), filtros.getCnpj()));
+			}
+			
+			if (filtros.getTipoMovimentacao() != null) {
+				predicates.add(builder.equal(root.get(Movimentacao_.tipoMovimentacao),
+						TipoMovimentacaoEnum.valueOf(filtros.getTipoMovimentacao())));
+			}
+			
+			if (filtros.getNumeroConta() != null) {
+				predicates.add(builder.equal(joinConta.get(Conta_.numeroConta), filtros.getNumeroConta()));
+			}
+
+			return builder.and(predicates.toArray(new Predicate[predicates.size()]));
+		};
 	}
 }

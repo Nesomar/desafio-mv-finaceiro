@@ -28,16 +28,16 @@ public class EmpresaController {
 	private EmpresaService service;
 	
 	@GetMapping
-	@ApiOperation(value = "Listar todas as empresas cadastradas.", tags = { "empresas" })
+	@ApiOperation(value = "Listar todas as empresas cadastradas.", tags = { "Empresas" })
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso"), @ApiResponse(code = 400, message = "Erro") })
 	public Page<EmpresaDTO> listarTodas(
-			@ApiParam("Número da página") @RequestParam(value = "pagina", defaultValue = "1") Integer pagina,
+			@ApiParam("Número da página") @RequestParam(value = "pagina", defaultValue = "0") Integer pagina,
 			@ApiParam("Número máximo de itens por página") @RequestParam(value = "tamanhoPagina", defaultValue = "10") Integer tamanhoPagina) {
 		return service.listarTodas(pagina, tamanhoPagina);
 	}
 
 	@GetMapping("/{id}")
-	@ApiOperation(value = "Consultar uma Empresa por id", tags = { "empresas" })
+	@ApiOperation(value = "Consultar uma Empresa por id", tags = { "Empresas" })
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso"), @ApiResponse(code = 404, message = "Não Encontrado") })
 	public ResponseEntity<EmpresaDTO> consultarPorId(@ApiParam("Id da Empresa") @PathVariable(value = "id") Long id) {
 		return service.consultarPorId(id);

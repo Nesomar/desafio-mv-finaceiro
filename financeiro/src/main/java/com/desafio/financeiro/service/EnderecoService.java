@@ -112,4 +112,13 @@ public class EnderecoService implements Serializable {
 		
 		repository.save(optional.get());
 	}
+	
+	/**
+	 * 
+	 * @param idEndereco
+	 * @return
+	 */
+	public Optional<Endereco> buscarPorId(Long idEndereco) {
+		return repository.findById(idEndereco);
+	}
 }

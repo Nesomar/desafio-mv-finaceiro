@@ -2,7 +2,6 @@ package com.desafio.financeiro.domain.dto.movimentacao;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 import com.desafio.financeiro.domain.dto.conta.ContaDTO;
 import com.desafio.financeiro.domain.dto.empresa.EmpresaDTO;
@@ -19,7 +18,7 @@ public class MovimentacaoDTO implements Serializable {
 	
 	private TipoMovimentacaoEnum tipoMovimentacao;
 	
-	private LocalDate dataMovimentacao;
+	private String dataMovimentacao;
 	
 	private BigDecimal valorMovimentacao;
 	
@@ -48,11 +47,11 @@ public class MovimentacaoDTO implements Serializable {
 		this.tipoMovimentacao = tipoMovimentacao;
 	}
 
-	public LocalDate getDataMovimentacao() {
+	public String getDataMovimentacao() {
 		return dataMovimentacao;
 	}
 
-	public void setDataMovimentacao(LocalDate dataMovimentacao) {
+	public void setDataMovimentacao(String dataMovimentacao) {
 		this.dataMovimentacao = dataMovimentacao;
 	}
 

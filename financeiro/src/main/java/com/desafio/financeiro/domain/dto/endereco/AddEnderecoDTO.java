@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModel;
 
-@ApiModel(value = "Endereço DTO", description = "DTO com as infomações para cadastrar o Endereço")
+@ApiModel(value = "AddEnderecoDTO", description = "DTO com as infomações para cadastrar o Endereço")
 public class AddEnderecoDTO implements Serializable {
 
 	private static final long serialVersionUID = -8083683402088098672L;
@@ -20,7 +20,6 @@ public class AddEnderecoDTO implements Serializable {
 	@Size(max = 150)
 	private String logradouro;
 	
-	@NotBlank(message = "Campo complemento obrigatório.")
 	@Size(max = 150)
 	private String complemento;
 	

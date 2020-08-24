@@ -51,5 +51,14 @@ public class EmpresaService implements Serializable {
 			return ResponseEntity.notFound().build();
 		}
 	}
+	
+	/**
+	 * 
+	 * @param idEmpresa
+	 * @return
+	 */
+	public Optional<Empresa> buscarPorId(Long idEmpresa) {
+		return repository.findById(idEmpresa);
+	}
 
 }

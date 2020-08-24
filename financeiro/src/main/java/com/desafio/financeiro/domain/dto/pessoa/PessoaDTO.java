@@ -1,7 +1,6 @@
 package com.desafio.financeiro.domain.dto.pessoa;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 import io.swagger.annotations.ApiModel;
 
@@ -14,7 +13,7 @@ public class PessoaDTO implements Serializable {
 	
 	private String nome;
 	
-	private LocalDate dataNascimento;
+	private String dataNascimento;
 
 	public PessoaDTO() {
 	}
@@ -35,11 +34,11 @@ public class PessoaDTO implements Serializable {
 		this.nome = nome;
 	}
 
-	public LocalDate getDataNascimento() {
+	public String getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(LocalDate dataNascimento) {
+	public void setDataNascimento(String dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 }

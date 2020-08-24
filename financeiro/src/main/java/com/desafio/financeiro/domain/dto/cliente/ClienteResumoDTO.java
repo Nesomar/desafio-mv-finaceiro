@@ -1,13 +1,12 @@
 package com.desafio.financeiro.domain.dto.cliente;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 import com.desafio.financeiro.domain.enums.TipoClienteEnum;
 
 import io.swagger.annotations.ApiModel;
 
-@ApiModel(value = "Cliente DTO", description = "DTO com as informações resumidas do Cliente")
+@ApiModel(value = "ClienteResumoDTO", description = "DTO com as informações resumidas do Cliente")
 public class ClienteResumoDTO implements Serializable {
 
 	private static final long serialVersionUID = 8004277440196174970L;
@@ -22,7 +21,7 @@ public class ClienteResumoDTO implements Serializable {
 	
 	private Boolean ativo;
 	
-	private LocalDate dataCadastro;
+	private String dataCadastro;
 
 	public ClienteResumoDTO() {
 	}
@@ -67,11 +66,11 @@ public class ClienteResumoDTO implements Serializable {
 		this.ativo = ativo;
 	}
 
-	public LocalDate getDataCadastro() {
+	public String getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(LocalDate dataCadastro) {
+	public void setDataCadastro(String dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 }

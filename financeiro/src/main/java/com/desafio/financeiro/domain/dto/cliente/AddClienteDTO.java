@@ -10,13 +10,13 @@ import javax.validation.constraints.Size;
 
 import com.desafio.financeiro.domain.annotation.EnumValues;
 import com.desafio.financeiro.domain.dto.conta.AddContaDTO;
-import com.desafio.financeiro.domain.dto.movimentacao.AddMovimentacaoDTO;
+import com.desafio.financeiro.domain.dto.movimentacao.MovimentacaoInicialDTO;
 import com.desafio.financeiro.domain.dto.pessoa.AddPessoaDTO;
 import com.desafio.financeiro.domain.enums.TipoClienteEnum;
 
 import io.swagger.annotations.ApiModel;
 
-@ApiModel(value = "Cliente DTO", description = "DTO com as informações para Cadastrar um Cliente")
+@ApiModel(value = "AddClienteDTO", description = "DTO com as informações para Cadastrar um Cliente")
 public class AddClienteDTO implements Serializable{
 
 	private static final long serialVersionUID = 8063846933232796987L;
@@ -44,7 +44,11 @@ public class AddClienteDTO implements Serializable{
 	
 	private AddContaDTO conta;
 	
-	private AddMovimentacaoDTO movimentacao;
+	private MovimentacaoInicialDTO movimentacao;
+	
+	@NotBlank(message = "Campo documento obrigatório.")
+	@Size(max = 20)
+	private String documento;
 
 	public AddClienteDTO() {
 	}
@@ -105,12 +109,19 @@ public class AddClienteDTO implements Serializable{
 		this.conta = conta;
 	}
 
-	public AddMovimentacaoDTO getMovimentacao() {
+	public MovimentacaoInicialDTO getMovimentacao() {
 		return movimentacao;
 	}
 
-	public void setMovimentacao(AddMovimentacaoDTO movimentacao) {
+	public void setMovimentacao(MovimentacaoInicialDTO movimentacao) {
 		this.movimentacao = movimentacao;
 	}
 
+	public String getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(String documento) {
+		this.documento = documento;
+	}
 }

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.desafio.financeiro.domain.dto.conta.ContaDTO;
 import com.desafio.financeiro.domain.dto.movimentacao.AddMovimentacaoDTO;
 import com.desafio.financeiro.domain.dto.movimentacao.FiltroMovimentacaoDTO;
 import com.desafio.financeiro.domain.dto.movimentacao.MovimentacaoDTO;
@@ -35,14 +34,14 @@ public class MovimentacaoController {
 	private MovimentacaoService service;
 	
 	@GetMapping
-	@ApiOperation(value = "Consultar as Movimentações por Filtros.", tags = { "movimentacoes" })
+	@ApiOperation(value = "Consultar as Movimentações por Filtros.", tags = { "Movimentações" })
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso"), @ApiResponse(code = 400, message = "Erro") })
 	public Page<MovimentacaoDTO> consultarPorFiltros(@RequestParam FiltroMovimentacaoDTO filtros) {
 		return service.consultarPorFiltros(filtros);
 	}
 
 	@GetMapping("/{id}")
-	@ApiOperation(value = "Consultar uma Movimentação por id", tags = { "movimentacoes" })
+	@ApiOperation(value = "Consultar uma Movimentação por id", tags = { "Movimentações" })
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso"),
 			@ApiResponse(code = 404, message = "Não Encontrado") })
 	public ResponseEntity<MovimentacaoDTO> consultarPorId(@ApiParam("Id da Movimentação") @PathVariable(value = "id") Long id) {
@@ -50,9 +49,9 @@ public class MovimentacaoController {
 	}
 
 	@PostMapping
-	@ApiOperation(value = "Cadastrar uma Movimentação", tags = { "movimentacoes" })
+	@ApiOperation(value = "Cadastrar uma Movimentação", tags = { "Movimentações" })
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso"), @ApiResponse(code = 400, message = "Erro") })
-	public ResponseEntity<ContaDTO> cadastrar(
+	public ResponseEntity<MovimentacaoDTO> cadastrar(
 			@ApiParam("Informações para cadastrar uma Movimentação") @Valid @RequestBody AddMovimentacaoDTO movimentacaoDTO) {
 		return service.cadastrar(movimentacaoDTO);
 	}

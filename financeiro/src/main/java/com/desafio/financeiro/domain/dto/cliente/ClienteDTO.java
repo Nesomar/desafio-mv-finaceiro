@@ -1,23 +1,19 @@
 package com.desafio.financeiro.domain.dto.cliente;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 import com.desafio.financeiro.domain.dto.empresa.EmpresaDTO;
 import com.desafio.financeiro.domain.dto.endereco.EnderecoDTO;
 import com.desafio.financeiro.domain.dto.pessoa.PessoaDTO;
-import com.desafio.financeiro.domain.enums.TipoClienteEnum;
 
 import io.swagger.annotations.ApiModel;
 
-@ApiModel(value = "Cliente DTO", description = "DTO com as informações do Cliente")
+@ApiModel(value = "ClienteDTO", description = "DTO com as informações do Cliente")
 public class ClienteDTO implements Serializable {
 
 	private static final long serialVersionUID = -1908101212937155888L;
 	
 	private Long id;
-	
-	private TipoClienteEnum tipoCliente;
 	
 	private String numeroTelefone;
 	
@@ -25,7 +21,7 @@ public class ClienteDTO implements Serializable {
 	
 	private Boolean ativo;
 	
-	private LocalDate dataCadastro;
+	private String dataCadastro;
 	
 	private PessoaDTO pessoa;
 	
@@ -42,14 +38,6 @@ public class ClienteDTO implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public TipoClienteEnum getTipoCliente() {
-		return tipoCliente;
-	}
-
-	public void setTipoCliente(TipoClienteEnum tipoCliente) {
-		this.tipoCliente = tipoCliente;
 	}
 
 	public String getNumeroTelefone() {
@@ -76,11 +64,11 @@ public class ClienteDTO implements Serializable {
 		this.ativo = ativo;
 	}
 
-	public LocalDate getDataCadastro() {
+	public String getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(LocalDate dataCadastro) {
+	public void setDataCadastro(String dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 
