@@ -34,26 +34,12 @@ import com.desafio.financeiro.service.mapper.MovimentacaoMapper;
 @Service
 public class MovimentacaoService implements Serializable {
 
-	private static final String VALOR_ACIMA_VINTE_MOVIMENTACOES = "0.50";
-
-	private static final String VALOR_ATE_VINTE_MOVIMENTACOES = "0.75";
-
-	private static final String VALOR_DEZ_MOVIMENTACOES = "1.00";
-
-	private static final int VINTE_MOVIMENTACOES = 20;
-
-	private static final int DEZ_MOVIMENTACOES = 10;
+	private static final long serialVersionUID = -7526724814034358377L;
 
 	private static final String A_MOVIMENTACAO_INICIAL_PRECISA_SER_DO_TIPO_CREDITO_EM_CONTA = "A movimentação inicial precisa ser do tipo Crédito em conta.";
-
-	private static final long serialVersionUID = -7526724814034358377L;
-	
 	private static final String CONTA_NAO_ENCONTRADA = "Conta não encontrada";
-
 	private static final String EMPRESA_NAO_ENCONTRADA = "Empresa não encontrada";
-
 	private static final int TAMANHO_PAGINA_PADRAO = 10;
-
 	private static final int PAGINA_PADRAO = 0;
 
 	
@@ -195,22 +181,7 @@ public class MovimentacaoService implements Serializable {
 	 * @return
 	 */
 	public BigDecimal calcularValorPagoMovimentacoes(Long totalMovimentacoes) {
-		
-		BigDecimal valorMovimentacao = BigDecimal.ZERO;
-		
-		if (totalMovimentacoes <= DEZ_MOVIMENTACOES) {
-			valorMovimentacao = new BigDecimal(VALOR_DEZ_MOVIMENTACOES);
-		}
-		
-		if (totalMovimentacoes > DEZ_MOVIMENTACOES && totalMovimentacoes <= VINTE_MOVIMENTACOES) {
-			valorMovimentacao = new BigDecimal(VALOR_ATE_VINTE_MOVIMENTACOES);
-		}
-		
-		if (totalMovimentacoes > VINTE_MOVIMENTACOES) {
-			valorMovimentacao = new BigDecimal(VALOR_ACIMA_VINTE_MOVIMENTACOES);
-		}
-		
-		return valorMovimentacao.multiply(new BigDecimal(totalMovimentacoes));
+		return repository.getValorPagoMovimentacoes(totalMovimentacoes);
 	}
 
 	/**
