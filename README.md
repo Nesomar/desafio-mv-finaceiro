@@ -16,7 +16,7 @@ http://localhost:8080/swagger-ui.html
     spring.datasource.password=DesafioMV1
     spring.datasource.driver.class=oracle.jdbc.driver.OracleDriver
     
-3 - Execultar os spripts de carga inicial.  
+3 - Execultar os spripts de carga inicial e das procedures.  
     Link - https://github.com/Nesomar/desafio-mv-finaceiro/tree/master/financeiro/scripts
     
 4 - Execultar o Maven update e o Clean install.
