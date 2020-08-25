@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import com.desafio.financeiro.domain.entity.Movimentacao;
 
 @Repository
-public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Long>, JpaSpecificationExecutor<Movimentacao> {
+public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Long>, JpaSpecificationExecutor<Movimentacao>, MovimentacaoRepositoryCustom {
 
 }

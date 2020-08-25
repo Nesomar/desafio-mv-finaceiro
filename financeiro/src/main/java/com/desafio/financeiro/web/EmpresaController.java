@@ -2,6 +2,8 @@ package com.desafio.financeiro.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,5 +43,14 @@ public class EmpresaController {
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso"), @ApiResponse(code = 404, message = "Não Encontrado") })
 	public ResponseEntity<EmpresaDTO> consultarPorId(@ApiParam("Id da Empresa") @PathVariable(value = "id") Long id) {
 		return service.consultarPorId(id);
+	}
+	
+	@ApiOperation(value = "Resonsável por realizar a exportação do relatório de Receita por periodo", tags = { "Empresas" })
+	@GetMapping("{cnpj}/relatorios/periodos")
+	public ResponseEntity<byte[]> exportRelatorioReceitaPeriodoCSV(
+			@ApiParam("CNPJ da Empresa") @RequestParam(value = "cnpj", required = false) String cnpj,
+			@ApiParam("Data inicial") @RequestParam(value = "dataInicial", required = false) @DateTimeFormat(iso = ISO.DATE) String dataInicial,
+			@ApiParam("Data Final") @RequestParam(value = "dataFinal", required = false) @DateTimeFormat(iso = ISO.DATE) String dataFinal) {
+		return service.exportRelatorioReceitaPeriodoCSV(cnpj, dataInicial, dataFinal);
 	}
 }

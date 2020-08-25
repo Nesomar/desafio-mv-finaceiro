@@ -29,14 +29,11 @@ import com.desafio.financeiro.service.relatorios.RelatoriosCSV;
 @Service
 public class ClienteService implements Serializable {
 
-	private static final String DESAFIO_MV = "desafioMV";
-
-	private static final String EXTENSAO_ARQUIVO_PADRAO = ".csv";
-
-	private static final String RELATORIO = "relatorio";
-
 	private static final long serialVersionUID = -3218712469548742564L;
 	
+	private static final String DESAFIO_MV = "desafioMV";
+	private static final String EXTENSAO_ARQUIVO_PADRAO = ".csv";
+	private static final String RELATORIO = "relatorio";
 	private static final char SEPARATOR = ';';
 	private static final String SEPARADOR_ENDERECO = ", ";
 	private static final String CLIENTE_NAO_ECONTRADO = "Cliente não econtrado.";

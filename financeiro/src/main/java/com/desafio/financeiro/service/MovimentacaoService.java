@@ -2,6 +2,7 @@ package com.desafio.financeiro.service;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,7 @@ import com.desafio.financeiro.domain.dto.movimentacao.AddMovimentacaoDTO;
 import com.desafio.financeiro.domain.dto.movimentacao.FiltroMovimentacaoDTO;
 import com.desafio.financeiro.domain.dto.movimentacao.MovimentacaoCSVDTO;
 import com.desafio.financeiro.domain.dto.movimentacao.MovimentacaoDTO;
+import com.desafio.financeiro.domain.dto.movimentacao.MovimentacaoEmpresaDTO;
 import com.desafio.financeiro.domain.dto.movimentacao.MovimentacaoInicialDTO;
 import com.desafio.financeiro.domain.entity.Conta;
 import com.desafio.financeiro.domain.entity.Empresa;
@@ -192,7 +194,7 @@ public class MovimentacaoService implements Serializable {
 	 * @param totalMovimentacoes
 	 * @return
 	 */
-	private BigDecimal calcularValorPagoMovimentacoes(Long totalMovimentacoes) {
+	public BigDecimal calcularValorPagoMovimentacoes(Long totalMovimentacoes) {
 		
 		BigDecimal valorMovimentacao = BigDecimal.ZERO;
 		
@@ -232,5 +234,17 @@ public class MovimentacaoService implements Serializable {
 				.withValorPago(calcularValorPagoMovimentacoes(movimentacoes.stream().count()))
 				.withSaldoAtual(calcularSaldoAtual(movimentacoes))
 				.build();
+	}
+	
+	/**
+	 * 
+	 * @param cnpj
+	 * @param dataInicial
+	 * @param dataFinal
+	 * @return
+	 */
+	public List<MovimentacaoEmpresaDTO> consultarMovimentacaoPorCNPJEPeriodo (String cnpj, LocalDate dataInicial,
+			LocalDate dataFinal) {
+		return repository.consultarPorCNPJEPeriodo(cnpj, dataInicial, dataFinal);
 	}
 }
