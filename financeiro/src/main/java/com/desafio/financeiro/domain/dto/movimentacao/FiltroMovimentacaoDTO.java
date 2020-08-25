@@ -10,6 +10,7 @@ import com.desafio.financeiro.domain.annotation.EnumValues;
 import com.desafio.financeiro.domain.enums.TipoMovimentacaoEnum;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 
@@ -19,14 +20,16 @@ import io.swagger.annotations.ApiModel;
 @ApiModel(value = "FiltroMovimentacaoDTO", description = "DTO com os campos possíveis para filtrar as movimentações")
 public class FiltroMovimentacaoDTO implements Serializable {
 
-	private static final long serialVersionUID = 4776138031091071237L;
-	
+	private static final long serialVersionUID = 5778699355652639404L;
+
 	@EnumValues(enumClass = TipoMovimentacaoEnum.class, acceptNull = true)
 	private String tipoMovimentacao;
 
+	@ApiModelProperty(example = "2020-08-24")
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate dataInicial;
 	
+	@ApiModelProperty(example = "2020-08-24")
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate dataFinal;
 	
@@ -37,6 +40,9 @@ public class FiltroMovimentacaoDTO implements Serializable {
 	private Integer pagina;
 	
 	private Integer tamanhoPagina;
+
+	public FiltroMovimentacaoDTO() {
+	}
 
 	public String getTipoMovimentacao() {
 		return tipoMovimentacao;

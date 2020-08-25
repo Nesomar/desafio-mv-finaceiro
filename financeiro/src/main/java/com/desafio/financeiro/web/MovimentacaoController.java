@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.desafio.financeiro.domain.dto.movimentacao.AddMovimentacaoDTO;
@@ -36,7 +35,7 @@ public class MovimentacaoController {
 	@GetMapping
 	@ApiOperation(value = "Consultar as Movimentações por Filtros.", tags = { "Movimentações" })
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso"), @ApiResponse(code = 400, message = "Erro") })
-	public Page<MovimentacaoDTO> consultarPorFiltros(@RequestParam FiltroMovimentacaoDTO filtros) {
+	public Page<MovimentacaoDTO> consultarPorFiltros(@ApiParam("Filtros de Pesquisa") FiltroMovimentacaoDTO filtros) {
 		return service.consultarPorFiltros(filtros);
 	}
 

@@ -12,6 +12,8 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import com.desafio.financeiro.domain.annotation.EnumValues;
 import com.desafio.financeiro.domain.enums.TipoMovimentacaoEnum;
 
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 
  * @author nesom
@@ -23,7 +25,8 @@ public class MovimentacaoInicialDTO implements Serializable {
 
 	@EnumValues(enumClass = TipoMovimentacaoEnum.class, message = "Opção não encontrada no TipoMovimentacaoEnum")
 	private String tipoMovimentacao;
-
+	
+	@ApiModelProperty(example = "2020-08-24")
 	@NotNull(message = "Campo data Movimentação obrigatório.")
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate dataMovimentacao;

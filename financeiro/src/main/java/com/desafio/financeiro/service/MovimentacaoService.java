@@ -1,6 +1,7 @@
 package com.desafio.financeiro.service;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.desafio.financeiro.domain.dto.movimentacao.AddMovimentacaoDTO;
 import com.desafio.financeiro.domain.dto.movimentacao.FiltroMovimentacaoDTO;
+import com.desafio.financeiro.domain.dto.movimentacao.MovimentacaoCSVDTO;
 import com.desafio.financeiro.domain.dto.movimentacao.MovimentacaoDTO;
 import com.desafio.financeiro.domain.dto.movimentacao.MovimentacaoInicialDTO;
 import com.desafio.financeiro.domain.entity.Conta;
@@ -29,6 +31,16 @@ import com.desafio.financeiro.service.mapper.MovimentacaoMapper;
 
 @Service
 public class MovimentacaoService implements Serializable {
+
+	private static final String VALOR_ACIMA_VINTE_MOVIMENTACOES = "0.50";
+
+	private static final String VALOR_ATE_VINTE_MOVIMENTACOES = "0.75";
+
+	private static final String VALOR_DEZ_MOVIMENTACOES = "1.00";
+
+	private static final int VINTE_MOVIMENTACOES = 20;
+
+	private static final int DEZ_MOVIMENTACOES = 10;
 
 	private static final String A_MOVIMENTACAO_INICIAL_PRECISA_SER_DO_TIPO_CREDITO_EM_CONTA = "A movimentação inicial precisa ser do tipo Crédito em conta.";
 
@@ -130,5 +142,95 @@ public class MovimentacaoService implements Serializable {
 		conta.setSaldoInicial(movimentacao.getValorMovimentacao());
 		
 		contaService.atualizarSaldo(conta);
+	}
+	
+	/**
+	 * 
+	 * @param idCliente
+	 * @return
+	 */
+	public MovimentacaoCSVDTO consultarMovimentacaoPorIdCliente(Long idCliente) {
+		
+		List<Movimentacao> movimentacoes = repository
+				.findAll(MovimentacaoSpecification.consultarPorIdCliente(idCliente));
+		
+		return MovimentacaoCSVDTO.builder()
+				.withSaldoInicial(movimentacoes.stream().filter(Movimentacao::getMovimentacaoInicial)
+						.map(Movimentacao::getValorMovimentacao).findAny().orElse(BigDecimal.ZERO))
+				.withTotalMovimentacao(movimentacoes.stream().count())
+				.withTotalMovimentacaoCredito(movimentacoes.stream().filter(movimentacao -> TipoMovimentacaoEnum.CREDITO.equals(movimentacao.getTipoMovimentacao())).count())
+				.withTotalMovimentacaoDebito(movimentacoes.stream().filter(movimentacao -> TipoMovimentacaoEnum.DEBITO.equals(movimentacao.getTipoMovimentacao())).count())
+				.withValorPago(calcularValorPagoMovimentacoes(movimentacoes.stream().count()))
+				.withSaldoAtual(calcularSaldoAtual(movimentacoes))
+				.build();
+	}
+
+	/**
+	 * 
+	 * @param movimentacoes
+	 * @return
+	 */
+	private BigDecimal calcularSaldoAtual(List<Movimentacao> movimentacoes) {
+		
+		BigDecimal saldoInicial = movimentacoes.stream().filter(Movimentacao::getMovimentacaoInicial)
+				.map(Movimentacao::getValorMovimentacao).findAny().orElse(BigDecimal.ZERO);
+		
+		BigDecimal saldoCredito = movimentacoes.stream()
+				.filter(movimentacao -> TipoMovimentacaoEnum.CREDITO.equals(movimentacao.getTipoMovimentacao())
+						&& Boolean.FALSE.equals(movimentacao.getMovimentacaoInicial()))
+				.map(Movimentacao::getValorMovimentacao).reduce(BigDecimal.ZERO, BigDecimal::add);
+				
+		BigDecimal saldoDebito = movimentacoes.stream()
+				.filter(movimentacao -> TipoMovimentacaoEnum.DEBITO.equals(movimentacao.getTipoMovimentacao()))
+				.map(Movimentacao::getValorMovimentacao).reduce(BigDecimal.ZERO, BigDecimal::add);		
+		
+		return saldoInicial.add(saldoCredito).subtract(saldoDebito);
+	}
+
+	/**
+	 * 
+	 * @param totalMovimentacoes
+	 * @return
+	 */
+	private BigDecimal calcularValorPagoMovimentacoes(Long totalMovimentacoes) {
+		
+		BigDecimal valorMovimentacao = BigDecimal.ZERO;
+		
+		if (totalMovimentacoes <= DEZ_MOVIMENTACOES) {
+			valorMovimentacao = new BigDecimal(VALOR_DEZ_MOVIMENTACOES);
+		}
+		
+		if (totalMovimentacoes > DEZ_MOVIMENTACOES && totalMovimentacoes <= VINTE_MOVIMENTACOES) {
+			valorMovimentacao = new BigDecimal(VALOR_ATE_VINTE_MOVIMENTACOES);
+		}
+		
+		if (totalMovimentacoes > VINTE_MOVIMENTACOES) {
+			valorMovimentacao = new BigDecimal(VALOR_ACIMA_VINTE_MOVIMENTACOES);
+		}
+		
+		return valorMovimentacao.multiply(new BigDecimal(totalMovimentacoes));
+	}
+
+	/**
+	 * 
+	 * @param idCliente
+	 * @param dataInicial
+	 * @param dataFinal
+	 * @return
+	 */
+	public MovimentacaoCSVDTO consultarMovimentacaoPorIdClienteEPeriodo(Long idCliente, String dataInicial, String dataFinal) {
+		
+		List<Movimentacao> movimentacoes = repository
+				.findAll(MovimentacaoSpecification.consultarPorIdClienteEPeriodo(idCliente, dataInicial, dataFinal));
+		
+		return MovimentacaoCSVDTO.builder()
+				.withSaldoInicial(movimentacoes.stream().filter(Movimentacao::getMovimentacaoInicial)
+						.map(Movimentacao::getValorMovimentacao).findAny().orElse(BigDecimal.ZERO))
+				.withTotalMovimentacao(movimentacoes.stream().count())
+				.withTotalMovimentacaoCredito(movimentacoes.stream().filter(movimentacao -> TipoMovimentacaoEnum.CREDITO.equals(movimentacao.getTipoMovimentacao())).count())
+				.withTotalMovimentacaoDebito(movimentacoes.stream().filter(movimentacao -> TipoMovimentacaoEnum.DEBITO.equals(movimentacao.getTipoMovimentacao())).count())
+				.withValorPago(calcularValorPagoMovimentacoes(movimentacoes.stream().count()))
+				.withSaldoAtual(calcularSaldoAtual(movimentacoes))
+				.build();
 	}
 }

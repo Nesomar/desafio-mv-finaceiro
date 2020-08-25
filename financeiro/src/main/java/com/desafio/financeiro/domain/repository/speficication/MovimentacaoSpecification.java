@@ -10,6 +10,8 @@ import javax.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.desafio.financeiro.domain.dto.movimentacao.FiltroMovimentacaoDTO;
+import com.desafio.financeiro.domain.entity.Cliente;
+import com.desafio.financeiro.domain.entity.Cliente_;
 import com.desafio.financeiro.domain.entity.Conta;
 import com.desafio.financeiro.domain.entity.Conta_;
 import com.desafio.financeiro.domain.entity.Empresa;
@@ -45,6 +47,21 @@ public class MovimentacaoSpecification {
 			return builder.and(predicates.toArray(new Predicate[predicates.size()]));
 		};
 	}
+	
+	public static Specification<Movimentacao> consultarPorPeriodo(String dataInicial, String dataFinal) {
+		return (root, query, builder) -> {
+
+			List<Predicate> predicates = new ArrayList<>();
+
+			if (dataInicial != null && dataFinal != null) {
+				predicates.add(builder.between(
+						builder.function(TRUNC, LocalDate.class, root.get(Movimentacao_.dataMovimentacao)),
+						LocalDate.parse(dataInicial), LocalDate.parse(dataFinal)));
+			}
+
+			return builder.and(predicates.toArray(new Predicate[predicates.size()]));
+		};
+	}
 
 	public static Specification<Movimentacao> consultarPorFiltros(FiltroMovimentacaoDTO filtros) {
 		return (root, query, builder) -> {
@@ -75,5 +92,25 @@ public class MovimentacaoSpecification {
 
 			return builder.and(predicates.toArray(new Predicate[predicates.size()]));
 		};
+	}
+
+	public static Specification<Movimentacao> consultarPorIdCliente(Long idCliente) {
+		return (root, query, builder) -> {
+
+			Join<Movimentacao, Conta> joinConta = root.join(Movimentacao_.conta);
+			Join<Conta, Cliente> joinCliente = joinConta.join(Conta_.cliente);
+
+			List<Predicate> predicates = new ArrayList<>();
+
+			if (idCliente != null) {
+				predicates.add(builder.equal(joinCliente.get(Cliente_.id), idCliente));
+			}
+
+			return builder.and(predicates.toArray(new Predicate[predicates.size()]));
+		};
+	}
+
+	public static Specification<Movimentacao> consultarPorIdClienteEPeriodo(Long idCliente, String dataInicial, String dataFinal) {
+		return Specification.where(consultarPorIdCliente(idCliente)).and(consultarPorPeriodo(dataInicial, dataFinal));
 	}
 }

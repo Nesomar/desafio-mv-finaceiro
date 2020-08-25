@@ -13,6 +13,7 @@ import com.desafio.financeiro.domain.annotation.EnumValues;
 import com.desafio.financeiro.domain.enums.TipoMovimentacaoEnum;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(value = "AddMovimentacaoDTO", description = "DTO com as informações necessárias para cadastrar uma movimentação")
 public class AddMovimentacaoDTO implements Serializable {
@@ -22,6 +23,7 @@ public class AddMovimentacaoDTO implements Serializable {
 	@EnumValues(enumClass = TipoMovimentacaoEnum.class, message = "Opção não encontrada no TipoMovimentacaoEnum")
 	private String tipoMovimentacao;
 
+	@ApiModelProperty(example = "2020-08-24")
 	@NotNull(message = "Campo data Movimentação obrigatório.")
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate dataMovimentacao;
