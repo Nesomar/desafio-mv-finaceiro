@@ -1,7 +1,7 @@
 # desafio-mv-finaceiro
 Repositório com o projeto desafio da Célula Finaceiro e Controladoria da MV.
 
-Para o desafio foram criados APIS utilizando o Spring Boot, que podem ser acessadas no link da documentação.
+Para o desafio foram criados APIS utilizando o Spring Boot, que podem ser acessadas no link da documentação.  
 http://localhost:8080/swagger-ui.html
 
 # Instalação do Projeto
@@ -16,7 +16,7 @@ http://localhost:8080/swagger-ui.html
     spring.datasource.password=DesafioMV1
     spring.datasource.driver.class=oracle.jdbc.driver.OracleDriver
     
-3 - Execultar os spripts de carga inicial e criação das procedures.
+3 - Execultar os spripts de carga inicial.  
     Link - https://github.com/Nesomar/desafio-mv-finaceiro/tree/master/financeiro/scripts
     
 4 - Execultar o Maven update e o Clean install.
